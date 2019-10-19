@@ -107,19 +107,9 @@ class Bet365Scrapper
         selecionarDeporte("Fútbol")
         selecionarCampeonato(liga)
 
-        return getListaDePartidos
+        partidos = getListaDePartidos
+        @driver.close
+
+        return partidos 
     end
 end
-
-scrapper = Bet365Scrapper.new
-partidos = scrapper.obtenerPartidosDisponibles("Uruguay - Clausura")
-
-puts ""
-puts "Lista de partidos:"
-puts ""
-
-for partido in partidos do
-    puts partido.local + " VS " + partido.visitante + " (" + partido.dividendoLocal + " - " + partido.dividendoEmpate + " - " + partido.dividendoVisitante + ")"
-end
-
-puts ""
