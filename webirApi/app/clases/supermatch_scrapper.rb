@@ -1,11 +1,6 @@
-require 'open-uri'
-require 'date'
-require_relative "../clases/bet365_scrapper"
+require "selenium-webdriver"
+require_relative "partido"
 
-class ParserSmController < ApplicationController
-
-  def index
-      begin
 =begin
 date = (Time.now.to_time.to_i)
 url= "https://www.supermatch.com.uy/home_preview_center?_=" + date.to_s
@@ -21,12 +16,12 @@ entries.each do |entry|
     @entriesArray << element
 end
 =end
-        bet365 = Bet365Scrapper.new
-        partidos = bet365.obtenerPartidosDisponibles("Uruguay - Clausura")
 
-        render json: partidos
-      rescue OpenURI::HTTPError => ex
-        render json: ex
-      end 
-  end
+class SupermatchScrapper 
+    
+    def obtenerPartidosDisponibles(liga)
+    # debe devolver un array de objetos partidos con los partidos disponibles en supermatch
+    # TODO
+
+    end
 end

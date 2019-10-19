@@ -1,12 +1,6 @@
-# PARA HACER ANDAR SELENIUM
-# - hay q bajarse el jar del server de selenium server desde https://www.seleniumhq.org/download/
-# - installar el webdriver de selenium para ruby, gem install selenium-webdriver -v 2.53.4
-# - descargar el chromedriver desde https://chromedriver.storage.googleapis.com/index.html?path=2.30/, poner el .exe en la variable PATH
-# - ejecutar este archivo, ruby bet365_scrapper.rb
-# - creo q no me falto nada
-
 require "selenium-webdriver"
 require_relative "partido"
+require_relative "diccionario_nombres_equipos"
 
 class Bet365Scrapper 
     def initialize
@@ -87,8 +81,8 @@ class Bet365Scrapper
 
         partidos.each_with_index do |partido, index|
             equipos = partido.text.split(" v ")
-            local = equipos[0]
-            visitante = equipos[1]
+            local = getNombreUnificado(equipos[0])
+            visitante = getNombreUnificado(equipos[1])
 
             dividendoLocal = dividendosLocales[index].text
             dividendoEmpate = dividendosEmpates[index].text
