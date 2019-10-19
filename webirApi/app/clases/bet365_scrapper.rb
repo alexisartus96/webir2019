@@ -51,9 +51,9 @@ class Bet365Scrapper
 
     def selecionarCampeonato(campeonato)
         wait = Selenium::WebDriver::Wait.new(timeout: 5)
-        wait.until { @driver.find_element(class: 'sm-CouponLink_Label').displayed? } 
+        wait.until { @driver.find_element(class: 'slm-CouponLink_Label').displayed? } 
 
-        ligas = @driver.find_elements(class: 'sm-CouponLink_Label')
+        ligas = @driver.find_elements(class: 'slm-CouponLink_Label')
 
         for liga in ligas
             nombreLiga = liga.text
@@ -72,14 +72,29 @@ class Bet365Scrapper
         wait = Selenium::WebDriver::Wait.new(timeout: 5)
         wait.until { @driver.find_element(class: 'sl-MarketCouponFixtureLabelBase').displayed? } 
 
-        partidos = @driver.find_elements(class: 'sl-CouponParticipantWithBookCloses_Name')
+        columnaPartidos = @driver.find_element(class: 'sl-MarketCouponFixtureLabelBase')
+        columnasDividendos = @driver.find_elements(class: 'sl-MarketCouponValuesExplicit33')
 
-        for partido in partidos do
+        columnaDividendosLocal = columnasDividendos[0]
+        columnaDividendosEmpate = columnasDividendos[1]
+        columnaDividendosVisitante = columnasDividendos[2]
+
+        dividendosLocales = columnaDividendosLocal.find_elements(class: 'gll-ParticipantOddsOnly_Odds')
+        dividendosEmpates = columnaDividendosEmpate.find_elements(class: 'gll-ParticipantOddsOnly_Odds')
+        dividendosVisitantes = columnaDividendosVisitante.find_elements(class: 'gll-ParticipantOddsOnly_Odds')
+
+        partidos = columnaPartidos.find_elements(class: 'sl-CouponParticipantWithBookCloses_Name')
+
+        partidos.each_with_index do |partido, index|
             equipos = partido.text.split(" v ")
             local = equipos[0]
             visitante = equipos[1]
 
-            listaPartidos << Partido.new(local, visitante)
+            dividendoLocal = dividendosLocales[index].text
+            dividendoEmpate = dividendosEmpates[index].text
+            dividendosVisitante = dividendosVisitantes[index].text
+
+            listaPartidos << Partido.new(local, visitante, dividendoLocal, dividendoEmpate, dividendosVisitante)
         end
 
         return listaPartidos
@@ -97,14 +112,14 @@ class Bet365Scrapper
 end
 
 scrapper = Bet365Scrapper.new
-partidos = scrapper.obtenerPartidosDisponibles("Argentina - Nacional B")
+partidos = scrapper.obtenerPartidosDisponibles("Uruguay - Clausura")
 
 puts ""
 puts "Lista de partidos:"
 puts ""
 
 for partido in partidos do
-    puts partido.local + " VS " + partido.visitante
+    puts partido.local + " VS " + partido.visitante + " (" + partido.dividendoLocal + " - " + partido.dividendoEmpate + " - " + partido.dividendoVisitante + ")"
 end
 
 puts ""
