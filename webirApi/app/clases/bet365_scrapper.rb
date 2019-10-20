@@ -8,7 +8,7 @@ class Bet365Scrapper
     end
 
     def selecionarIdioma(language)
-        wait = Selenium::WebDriver::Wait.new(timeout: 5)
+        wait = Selenium::WebDriver::Wait.new(timeout: 15)
         wait.until { @driver.find_element(id: 'HeaderWrapper').displayed? }
 
         idiomas = @driver.find_element(id: 'HeaderWrapper').find_elements(tag_name: 'li')
@@ -26,7 +26,7 @@ class Bet365Scrapper
     end
 
     def selecionarDeporte(sport)
-        wait = Selenium::WebDriver::Wait.new(timeout: 5)
+        wait = Selenium::WebDriver::Wait.new(timeout: 15)
         wait.until { @driver.find_element(class: 'wn-Classification').displayed? } 
 
         deportes = @driver.find_elements(class: 'wn-Classification')
@@ -44,7 +44,7 @@ class Bet365Scrapper
     end
 
     def selecionarCampeonato(campeonato)
-        wait = Selenium::WebDriver::Wait.new(timeout: 5)
+        wait = Selenium::WebDriver::Wait.new(timeout: 15)
         wait.until { @driver.find_element(class: 'slm-CouponLink_Label').displayed? } 
 
         ligas = @driver.find_elements(class: 'slm-CouponLink_Label')
@@ -63,8 +63,9 @@ class Bet365Scrapper
     
     def getListaDePartidos
         listaPartidos = []
-        wait = Selenium::WebDriver::Wait.new(timeout: 5)
+        wait = Selenium::WebDriver::Wait.new(timeout: 15)
         wait.until { @driver.find_element(class: 'sl-MarketCouponFixtureLabelBase').displayed? } 
+        sleep(3)
 
         columnaPartidos = @driver.find_element(class: 'sl-MarketCouponFixtureLabelBase')
         columnasDividendos = @driver.find_elements(class: 'sl-MarketCouponValuesExplicit33')
@@ -73,25 +74,35 @@ class Bet365Scrapper
         columnaDividendosEmpate = columnasDividendos[1]
         columnaDividendosVisitante = columnasDividendos[2]
 
-        dividendosLocales = columnaDividendosLocal.find_elements(class: 'gll-ParticipantOddsOnly_Odds')
-        dividendosEmpates = columnaDividendosEmpate.find_elements(class: 'gll-ParticipantOddsOnly_Odds')
-        dividendosVisitantes = columnaDividendosVisitante.find_elements(class: 'gll-ParticipantOddsOnly_Odds')
+        dividendosLocales = columnaDividendosLocal.find_elements(:xpath => "./*")
+        dividendosEmpates = columnaDividendosEmpate.find_elements(:xpath => "./*")
+        dividendosVisitantes = columnaDividendosVisitante.find_elements(:xpath => "./*")
 
-        partidos = columnaPartidos.find_elements(class: 'sl-CouponParticipantWithBookCloses_Name')
+        filaPartido = columnaPartidos.find_elements(:xpath => "./*")
+        fecha = nil
 
-        partidos.each_with_index do |partido, index|
-            equipos = partido.text.split(" v ")
-            local = getNombreUnificado(equipos[0])
-            visitante = getNombreUnificado(equipos[1])
+        filaPartido.each_with_index do |fila, index|
+            clasesFila = fila.attribute("class")
 
-            dividendoLocal = dividendosLocales[index].text
-            dividendoEmpate = dividendosEmpates[index].text
-            dividendoVisitante = dividendosVisitantes[index].text
+            if clasesFila.include? 'gll-MarketColumnHeader'
+                fecha = fila.text
+            elsif not clasesFila.include? 'sl-CouponParticipantWithBookCloses_ClockPaddingLeft'
+                nombresEquipos = fila.find_element(class: 'sl-CouponParticipantWithBookCloses_Name')
+                hora = fila.find_element(class: 'sl-CouponParticipantWithBookCloses_LeftSideContainer').text
 
-            nuevoPartido = Partido.new(local, visitante, 'FECHA', 'HORA')
-            nuevoPartido.agregarDividendoCasaDeApuesta('bet365', dividendoLocal, dividendoEmpate, dividendoVisitante)
-
-            listaPartidos << nuevoPartido
+                equipos = nombresEquipos.text.split(" v ")
+                local = getNombreUnificado(equipos[0])
+                visitante = getNombreUnificado(equipos[1])
+    
+                dividendoLocal = dividendosLocales[index].text
+                dividendoEmpate = dividendosEmpates[index].text
+                dividendoVisitante = dividendosVisitantes[index].text
+    
+                nuevoPartido = Partido.new(local, visitante, fecha, hora)
+                nuevoPartido.agregarDividendoCasaDeApuesta('bet365', dividendoLocal, dividendoEmpate, dividendoVisitante)
+    
+                listaPartidos << nuevoPartido
+            end
         end
 
         return listaPartidos

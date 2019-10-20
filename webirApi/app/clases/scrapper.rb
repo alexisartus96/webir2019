@@ -11,7 +11,8 @@ class Scrapper
         partidosBet365 = bet365.obtenerPartidosDisponibles("Uruguay - Clausura")
         partidosSupermatch = supermatch.obtenerPartidosDisponibles("Uruguay - Clausura")
         
-        return mergeListaDePartidos(partidosBet365, partidosSupermatch)
+        return partidosBet365
+        #return mergeListaDePartidos(partidosBet365, partidosSupermatch)
     end
 
     def mergeListaDePartidos(listaPartidos1, listaPartidos2)
