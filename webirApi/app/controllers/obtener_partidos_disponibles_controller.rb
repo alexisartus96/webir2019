@@ -1,13 +1,11 @@
-require 'open-uri'
-require 'date'
-require_relative "../clases/bet365_scrapper"
+require_relative "../clases/scrapper"
 
 class ObtenerPartidosDisponiblesController < ApplicationController
 
   def index
       begin
-        bet365 = Bet365Scrapper.new
-        partidos = bet365.obtenerPartidosDisponibles("Uruguay - Clausura")
+        scrapper = Scrapper.new
+        partidos = scrapper.obtenerPartidosDisponibles()
 
         render json: partidos
       rescue OpenURI::HTTPError => ex
