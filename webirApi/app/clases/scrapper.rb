@@ -4,8 +4,7 @@ require_relative "../clases/supermatch_scrapper"
 # clase encarga de hacer el scrapping de los partidos disponibles en las distintas casas de apuestas
 class Scrapper
     def obtenerPartidosDisponibles
-    # debe utilizar los scrappers de bet365 y supermatch para obtener los partidos disponibles en cada una, hacer un merge
-    # de las dos listas quedandose con los partidos que estan en ambas casas de apuesta y devolver esa lista.
+    # devuelve la lista de partidos que estan disponible tanto en bet365 como en supermatch
         bet365 = Bet365Scrapper.new
         supermatch = SupermatchScrapper.new
 
