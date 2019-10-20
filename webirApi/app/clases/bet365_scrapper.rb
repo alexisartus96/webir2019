@@ -86,9 +86,12 @@ class Bet365Scrapper
 
             dividendoLocal = dividendosLocales[index].text
             dividendoEmpate = dividendosEmpates[index].text
-            dividendosVisitante = dividendosVisitantes[index].text
+            dividendoVisitante = dividendosVisitantes[index].text
 
-            listaPartidos << Partido.new(local, visitante, dividendoLocal, dividendoEmpate, dividendosVisitante)
+            nuevoPartido = Partido.new(local, visitante, 'FECHA', 'HORA')
+            nuevoPartido.agregarDividendoCasaDeApuesta('bet365', dividendoLocal, dividendoEmpate, dividendoVisitante)
+
+            listaPartidos << nuevoPartido
         end
 
         return listaPartidos
