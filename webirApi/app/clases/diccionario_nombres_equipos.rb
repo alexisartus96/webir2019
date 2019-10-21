@@ -10,7 +10,7 @@ end
 $equiposUruguay = []
 
 $equiposUruguay << Equipo.new(["Peñarol"], "Peñarol")
-$equiposUruguay << Equipo.new(["Nacional"], "Nacional")
+$equiposUruguay << Equipo.new(["Nacional (Uru)"], "Nacional")
 $equiposUruguay << Equipo.new(["Defensor Sporting", "Defensor Sp."], "Defensor SP")
 $equiposUruguay << Equipo.new(["Juventud", "Juventud De Las Piedras"], "Juventud de las piedas")
 $equiposUruguay << Equipo.new(["Boston River"], "Boston River")
@@ -19,7 +19,7 @@ $equiposUruguay << Equipo.new(["Cerro"], "Cerro")
 $equiposUruguay << Equipo.new(["CA River Plate", "River Plate (Uru)"], "River")
 $equiposUruguay << Equipo.new(["Rampla Juniors"], "Rampla")
 $equiposUruguay << Equipo.new(["Danubio"], "Danubio")
-$equiposUruguay << Equipo.new(["Fenix"], "Fenix")
+$equiposUruguay << Equipo.new(["Fénix"], "Fenix")
 $equiposUruguay << Equipo.new(["Progreso"], "Progreso")
 $equiposUruguay << Equipo.new(["Plaza Colonia"], "Plaza Colonia")
 $equiposUruguay << Equipo.new(["Racing (Uru)", "Racing Club de Montevideo"], "Racing")
