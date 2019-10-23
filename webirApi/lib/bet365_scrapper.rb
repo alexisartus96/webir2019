@@ -1,17 +1,18 @@
 require "selenium-webdriver"
-require_relative "partido"
-require_relative "diccionario_nombres_equipos"
+# require_relative "diccionario_nombres_equipos"
 
-class Bet365Scrapper 
-    def initialize
-        @driver = Selenium::WebDriver.for :chrome
-    end
+module Bet365Scrapper 
+    # def initialize
+    #     @driver = Selenium::WebDriver.for :chrome
+    # end
 
+    
     def selecionarIdioma(language)
         wait = Selenium::WebDriver::Wait.new(timeout: 15)
         wait.until { @driver.find_element(id: 'HeaderWrapper').displayed? }
 
         idiomas = @driver.find_element(id: 'HeaderWrapper').find_elements(tag_name: 'li')
+        p idiomas
         
         for idioma in idiomas
             nombreIdioma = idioma.text
@@ -61,8 +62,7 @@ class Bet365Scrapper
         raise "No se pudo encontrar el campeonato '" + campeonato + "'"
     end
     
-    def getListaDePartidos
-        listaPartidos = []
+    def cargarPartidos
         wait = Selenium::WebDriver::Wait.new(timeout: 15)
         wait.until { @driver.find_element(class: 'sl-MarketCouponFixtureLabelBase').displayed? } 
         sleep(3)
@@ -87,37 +87,32 @@ class Bet365Scrapper
             if clasesFila.include? 'gll-MarketColumnHeader'
                 fecha = fila.text
             elsif not clasesFila.include? 'sl-CouponParticipantWithBookCloses_ClockPaddingLeft'
+                nuevoPartido = Partido.new
                 nombresEquipos = fila.find_element(class: 'sl-CouponParticipantWithBookCloses_Name')
                 hora = fila.find_element(class: 'sl-CouponParticipantWithBookCloses_LeftSideContainer').text
 
                 equipos = nombresEquipos.text.split(" v ")
-                local = getNombreUnificado(equipos[0])
-                visitante = getNombreUnificado(equipos[1])
+                nuevoPartido.local = equipos[0]
+                nuevoPartido.visitante = equipos[1]
     
-                dividendoLocal = dividendosLocales[index].text
-                dividendoEmpate = dividendosEmpates[index].text
-                dividendoVisitante = dividendosVisitantes[index].text
-    
-                nuevoPartido = Partido.new(local, visitante, fecha, hora)
-                nuevoPartido.agregarDividendoCasaDeApuesta('bet365', dividendoLocal, dividendoEmpate, dividendoVisitante)
-    
-                listaPartidos << nuevoPartido
+                nuevoPartido.dividendoLocal = dividendosLocales[index].text
+                nuevoPartido.dividendoEmpate = dividendosEmpates[index].text
+                nuevoPartido.dividendoVisitante = dividendosVisitantes[index].text
+                nuevoPartido.fecha = (fecha + hora).to_date
+                nuevoPartido.save
             end
         end
-
-        return listaPartidos
     end
 
-    def obtenerPartidosDisponibles(liga)
+    def obtenerPartidosBet365(liga)
+        @driver = Selenium::WebDriver.for :chrome
         @driver.navigate.to "https://www.bet365.mx"
 
         selecionarIdioma("Español")
         selecionarDeporte("Fútbol")
         selecionarCampeonato(liga)
-
-        partidos = getListaDePartidos
+        cargarPartidos()
         @driver.close
-
-        return partidos 
+ 
     end
 end

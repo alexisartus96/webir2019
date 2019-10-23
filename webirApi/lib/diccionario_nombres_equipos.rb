@@ -1,12 +1,3 @@
-class Equipo
-    attr_accessor :posibles_nombres, :nombre_unificado
-
-    def initialize(posiblesNombres, nombreUnificado)
-        @posibles_nombres = posiblesNombres
-        @nombre_unificado = nombreUnificado
-    end
-end
-
 $equiposUruguay = []
 
 $equiposUruguay << Equipo.new(["Peñarol"], "Peñarol")
@@ -26,6 +17,8 @@ $equiposUruguay << Equipo.new(["Racing (Uru)", "Racing Club de Montevideo"], "Ra
 $equiposUruguay << Equipo.new(["Montevideo Wanderers", "Wanderers (Uru)"], "Wanderers")
 $equiposUruguay << Equipo.new(["Liverpool (Uru)", "Liverpool Montevideo"], "Liverpool")
 
+module Diccionario
+
 def getNombreUnificado(nombreEquipo)
 # devuelve el nombre unificado de un equipo
     for equipo in $equiposUruguay
@@ -35,4 +28,6 @@ def getNombreUnificado(nombreEquipo)
     end
 
     return nil
+end
+
 end
