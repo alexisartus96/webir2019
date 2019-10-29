@@ -28,3 +28,8 @@ Diccionario.create!(clave:'Montevideo Wanderers', valor:'Wanderers')
 Diccionario.create!(clave:'Wanderers (Uru)', valor:'Wanderers')
 Diccionario.create!(clave:'Liverpool (Uru)', valor:'Liverpool')
 Diccionario.create!(clave:'Liverpool Montevideo', valor:'Liverpool')
+Diccionario.create!(clave:'River Plate (Arg)', valor:'River Plate')
+Diccionario.create!(clave:'Colón (Arg)', valor:'Colón')
+
+
+

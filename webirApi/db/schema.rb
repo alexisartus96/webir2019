@@ -22,11 +22,13 @@ ActiveRecord::Schema.define(version: 2019_10_23_013251) do
   create_table "partidos", force: :cascade do |t|
     t.string "visitante"
     t.string "local"
-    t.float "dividendoLocal"
-    t.float "dividendoVisitante"
-    t.float "dividendoEmpate"
+    t.float "dividendoLocalSM"
+    t.float "dividendoVisitanteSM"
+    t.float "dividendoEmpateSM"
+    t.float "dividendoLocalBet"
+    t.float "dividendoVisitanteBet"
+    t.float "dividendoEmpateBet"
     t.datetime "fecha"
-    t.integer "fuente"
     t.string "clave"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

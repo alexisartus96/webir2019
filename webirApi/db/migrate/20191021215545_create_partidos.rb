@@ -3,11 +3,13 @@ class CreatePartidos < ActiveRecord::Migration[6.0]
     create_table :partidos do |t|
       t.string :visitante
       t.string :local
-      t.float :dividendoLocal
-      t.float :dividendoVisitante
-      t.float :dividendoEmpate
+      t.float :dividendoLocalSM
+      t.float :dividendoVisitanteSM
+      t.float :dividendoEmpateSM
+      t.float :dividendoLocalBet
+      t.float :dividendoVisitanteBet
+      t.float :dividendoEmpateBet
       t.datetime :fecha
-      t.integer :fuente
       t.string :clave
 
       t.timestamps

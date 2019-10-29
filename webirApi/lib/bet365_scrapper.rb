@@ -7,12 +7,11 @@ module Bet365Scrapper
     # end
 
     
-    def selecionarIdioma(language)
+    def selecionarIdiomaBet(language)
         wait = Selenium::WebDriver::Wait.new(timeout: 15)
         wait.until { @driver.find_element(id: 'HeaderWrapper').displayed? }
 
         idiomas = @driver.find_element(id: 'HeaderWrapper').find_elements(tag_name: 'li')
-        p idiomas
         
         for idioma in idiomas
             nombreIdioma = idioma.text
@@ -26,7 +25,7 @@ module Bet365Scrapper
         raise "No se pudo encontrar el idioma " + idioma
     end
 
-    def selecionarDeporte(sport)
+    def selecionarDeporteBet(sport)
         wait = Selenium::WebDriver::Wait.new(timeout: 15)
         wait.until { @driver.find_element(class: 'wn-Classification').displayed? } 
 
@@ -44,7 +43,7 @@ module Bet365Scrapper
         raise "No se pudo encontrar el deporte " + sport
     end
 
-    def selecionarCampeonato(campeonato)
+    def selecionarCampeonatoBet(campeonato)
         wait = Selenium::WebDriver::Wait.new(timeout: 15)
         wait.until { @driver.find_element(class: 'slm-CouponLink_Label').displayed? } 
 
@@ -62,7 +61,7 @@ module Bet365Scrapper
         raise "No se pudo encontrar el campeonato '" + campeonato + "'"
     end
     
-    def cargarPartidos
+    def cargarPartidosBet
         wait = Selenium::WebDriver::Wait.new(timeout: 15)
         wait.until { @driver.find_element(class: 'sl-MarketCouponFixtureLabelBase').displayed? } 
         sleep(3)
@@ -89,17 +88,48 @@ module Bet365Scrapper
             elsif not clasesFila.include? 'sl-CouponParticipantWithBookCloses_ClockPaddingLeft'
                 nuevoPartido = Partido.new
                 nombresEquipos = fila.find_element(class: 'sl-CouponParticipantWithBookCloses_Name')
-                hora = fila.find_element(class: 'sl-CouponParticipantWithBookCloses_LeftSideContainer').text
+                hora = fila.find_element(class: 'sl-CouponParticipantWithBookCloses_LeftSideContainer').text.split(":")
 
                 equipos = nombresEquipos.text.split(" v ")
-                nuevoPartido.local = equipos[0]
-                nuevoPartido.visitante = equipos[1]
-    
-                nuevoPartido.dividendoLocal = dividendosLocales[index].text
-                nuevoPartido.dividendoEmpate = dividendosEmpates[index].text
-                nuevoPartido.dividendoVisitante = dividendosVisitantes[index].text
-                nuevoPartido.fecha = (fecha + hora).to_date
-                nuevoPartido.save
+                p equipos
+                local = equipos[0]
+                visitante = equipos[1]
+                unless(Diccionario.mapeo(equipos[0]).empty?)
+                    local = Diccionario.mapeo(equipos[0])[0].valor
+                end
+                unless(Diccionario.mapeo(equipos[1]).empty?)
+                    visitante = Diccionario.mapeo(equipos[1])[0].valor
+                end
+
+                dividendoLocal = dividendosLocales[index].text
+                dividendoEmpate = dividendosEmpates[index].text
+                dividendoVisitante = dividendosVisitantes[index].text
+                fechaConstructor = (fecha).to_date
+                
+                fechaPartido = DateTime.new(2019, fechaConstructor.month, fechaConstructor.day, hora[0].to_i, hora[1].to_i)
+                p "###################################"
+                p fechaPartido
+                fechaPartido = fechaPartido + 2.hours
+                p "###################################"
+                p fechaPartido
+                clave = (fechaPartido.to_s + local.to_s + visitante.to_s)
+                partidoClave = Partido.where(clave: clave)
+                if partidoClave.empty?
+                    nuevoPartido = Partido.new
+                    nuevoPartido.local = local
+                    nuevoPartido.visitante = visitante
+                    nuevoPartido.fecha = fechaPartido
+                    nuevoPartido.dividendoEmpateBet = dividendoEmpate
+                    nuevoPartido.dividendoLocalBet = dividendoLocal
+                    nuevoPartido.dividendoVisitanteBet = dividendoVisitante
+                    nuevoPartido.clave = clave 
+                    nuevoPartido.save
+                else
+                    oldPartido = partidoClave[0]
+                    oldPartido.update(:dividendoEmpateBet => dividendoEmpate,
+                                        :dividendoLocalBet => dividendoLocal,
+                                        :dividendoVisitanteBet => dividendoVisitante)
+                end
             end
         end
     end
@@ -108,10 +138,10 @@ module Bet365Scrapper
         @driver = Selenium::WebDriver.for :chrome
         @driver.navigate.to "https://www.bet365.mx"
 
-        selecionarIdioma("Español")
-        selecionarDeporte("Fútbol")
-        selecionarCampeonato(liga)
-        cargarPartidos()
+        selecionarIdiomaBet("Español")
+        selecionarDeporteBet("Fútbol")
+        selecionarCampeonatoBet(liga)
+        cargarPartidosBet()
         @driver.close
  
     end

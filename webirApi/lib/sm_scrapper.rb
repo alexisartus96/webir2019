@@ -8,30 +8,11 @@ module SmScrapper
     #     @driver = Selenium::WebDriver.for :chrome
     # end
 
-    
-    def selecionarIdioma(language)
-        wait = Selenium::WebDriver::Wait.new(timeout: 15)
-        wait.until { @driver.find_element(id: 'HeaderWrapper').displayed? }
-
-        idiomas = @driver.find_element(id: 'HeaderWrapper').find_elements(tag_name: 'li')
-        
-        for idioma in idiomas
-            nombreIdioma = idioma.text
-
-            if nombreIdioma == language
-                idioma.click
-                return
-            end
-        end
-        
-        raise "No se pudo encontrar el idioma " + idioma
-    end
-
-    def selecionarDeporte(sport)
+    def selecionarDeporteSM(sport, search_class)
         wait = Selenium::WebDriver::Wait.new(timeout: 10)
-        wait.until { @driver.find_element(class: 'category_link').displayed? } 
+        wait.until { @driver.find_element(class: search_class).displayed? } 
 
-        deportes = @driver.find_elements(class: 'category_link')
+        deportes = @driver.find_elements(class: search_class)
         
         for deporte in deportes
             nombreDeporte = deporte.text
@@ -45,7 +26,7 @@ module SmScrapper
         raise "No se pudo encontrar el deporte " + sport
     end
 
-    def seleccionarCampeonato(campeonato)
+    def seleccionarCampeonatoSM(campeonato)
         ligas = @driver.find_elements(class: 'championships')
         for liga in ligas
             nombreLiga = liga.text
@@ -59,7 +40,7 @@ module SmScrapper
         raise "No se pudo encontrar el campeonato '" + campeonato + "'"
     end
 
-    def selecionarPais(pais)
+    def selecionarPaisSM(pais)
         wait = Selenium::WebDriver::Wait.new(timeout: 15)
         wait.until { @driver.find_element(class: 'leaguehead').displayed? } 
         wait.until { @driver.find_element(class: 'main-bet').displayed? }
@@ -78,7 +59,7 @@ module SmScrapper
         raise "No se pudo encontrar el campeonato '" + pais + "'"
     end
     
-    def cargarPartidos
+    def cargarPartidosSM
         wait = Selenium::WebDriver::Wait.new(timeout: 15)
         wait.until { @driver.find_element(class: 'main-content-bet-wrapper').displayed? }
         sleep(3)
@@ -94,27 +75,51 @@ module SmScrapper
 
             if clasesFila.include? 'date'
                 fecha = fila.text
-            else
+            elsif clasesFila.include? 'clearfix' 
                 equipos = fila.text.split("\n")
-                nuevoPartido = Partido.new
-                nuevoPartido.local = Diccionario.mapeo(equipos[1])[0].valor
-
-                nuevoPartido.visitante = Diccionario.mapeo(equipos[5])[0].valor
+                local = equipos[1]
+                visitante = equipos[5]
+                p "##################"
+                p Diccionario.mapeo(equipos[1])
+                unless(Diccionario.mapeo(equipos[1]).empty?)
+                    local = Diccionario.mapeo(equipos[1])[0].valor
+                    p "##################"
+                    p local
+                end
+                unless(Diccionario.mapeo(equipos[1]).empty?)
+                    visitante = Diccionario.mapeo(equipos[5])[0].valor
+                end
 
                 hora = equipos[0].split(":")
-                p hora
-                nuevoPartido.dividendoLocal = equipos[2].gsub(',', '.')
-                nuevoPartido.dividendoEmpate = equipos[4].gsub(',', '.')
-                nuevoPartido.dividendoVisitante = equipos[6].gsub(',', '.')
+                dividendoLocal = equipos[2].gsub(',', '.')
+                dividendoEmpate = equipos[4].gsub(',', '.')
+                dividendoVisitante = equipos[6].gsub(',', '.')
 
-                fechaConstructor = fecha.split(" ")
-                nuevoPartido.fecha = ((fechaConstructor[1] +' '+ fechaConstructor[2] + '2019').to_date.to_time + hora[0].to_i.hours + hora[0].to_i.minutes)
-                nuevoPartido.fuente = 1
-                nuevoPartido.clave = (nuevoPartido.fecha.to_s + nuevoPartido.local.to_s + nuevoPartido.visitante.to_s + nuevoPartido.fuente.to_s)
-                oldPartido = Partido.where(clave: nuevoPartido.clave)
-                # if oldPartido.empty? 
+                fechaString = fecha.split(" ")
+                fechaConstructor = (fechaString[1] +' '+ fechaString[2] + '2019').to_date
+                
+                fechaPartido = DateTime.new(2019, fechaConstructor.month, fechaConstructor.day, hora[0].to_i, hora[1].to_i)
+                # p fechaPartido
+                clave = (fechaPartido.to_s + local.to_s + visitante.to_s)
+                partidoClave = Partido.where(clave: clave)
+                if partidoClave.empty?
+                    nuevoPartido = Partido.new
+                    nuevoPartido.local = local
+                    nuevoPartido.visitante = visitante
+                    # p "###################################"
+                    # p fechaPartido
+                    nuevoPartido.fecha = fechaPartido
+                    nuevoPartido.dividendoEmpateSM = dividendoEmpate
+                    nuevoPartido.dividendoLocalSM = dividendoLocal
+                    nuevoPartido.dividendoVisitanteSM = dividendoVisitante
+                    nuevoPartido.clave = clave 
                     nuevoPartido.save
-                # end
+                else
+                    oldPartido = partidoClave[0]
+                    oldPartido.update(:dividendoEmpateSM => dividendoEmpate,
+                                        :dividendoLocalSM => dividendoLocal,
+                                        :dividendoVisitanteSM => dividendoVisitante)
+                end
             end
         end
     end
@@ -123,10 +128,10 @@ module SmScrapper
         @driver = Selenium::WebDriver.for :chrome
         @driver.navigate.to "https://www.supermatch.com.uy/"
 
-        selecionarDeporte("Fútbol")
-        selecionarPais("URUGUAY")
-        seleccionarCampeonato("Uruguay Clausura")
-        cargarPartidos()
+        selecionarDeporteSM("Fútbol", 'category_link')
+        selecionarPaisSM("ARGENTINA")
+        seleccionarCampeonatoSM("Argentina 1ª")
+        cargarPartidosSM()
         @driver.close
  
     end
