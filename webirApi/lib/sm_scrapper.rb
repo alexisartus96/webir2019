@@ -1,12 +1,7 @@
 require "selenium-webdriver"
-require 'open-uri'
 require 'date'
-# require_relative "diccionario_nombres_equipos"
 
 module SmScrapper 
-    # def initialize
-    #     @driver = Selenium::WebDriver.for :chrome
-    # end
 
     def selecionarDeporteSM(sport, search_class)
         wait = Selenium::WebDriver::Wait.new(timeout: 10)
@@ -79,14 +74,10 @@ module SmScrapper
                 equipos = fila.text.split("\n")
                 local = equipos[1]
                 visitante = equipos[5]
-                p "##################"
-                p Diccionario.mapeo(equipos[1])
                 unless(Diccionario.mapeo(equipos[1]).empty?)
                     local = Diccionario.mapeo(equipos[1])[0].valor
-                    p "##################"
-                    p local
                 end
-                unless(Diccionario.mapeo(equipos[1]).empty?)
+                unless(Diccionario.mapeo(equipos[5]).empty?)
                     visitante = Diccionario.mapeo(equipos[5])[0].valor
                 end
 
@@ -99,15 +90,13 @@ module SmScrapper
                 fechaConstructor = (fechaString[1] +' '+ fechaString[2] + '2019').to_date
                 
                 fechaPartido = DateTime.new(2019, fechaConstructor.month, fechaConstructor.day, hora[0].to_i, hora[1].to_i)
-                # p fechaPartido
-                clave = (fechaPartido.to_s + local.to_s + visitante.to_s)
+                clave = (local.to_s + visitante.to_s + fechaPartido.year.to_s + fechaPartido.month.to_s + fechaPartido.day.to_s)
                 partidoClave = Partido.where(clave: clave)
                 if partidoClave.empty?
+                    p "Nuevo partido Supermatch #{local} vs #{visitante} #{fechaPartido}"
                     nuevoPartido = Partido.new
                     nuevoPartido.local = local
                     nuevoPartido.visitante = visitante
-                    # p "###################################"
-                    # p fechaPartido
                     nuevoPartido.fecha = fechaPartido
                     nuevoPartido.dividendoEmpateSM = dividendoEmpate
                     nuevoPartido.dividendoLocalSM = dividendoLocal
@@ -115,6 +104,7 @@ module SmScrapper
                     nuevoPartido.clave = clave 
                     nuevoPartido.save
                 else
+                    p "Update partido Supermatch #{local} vs #{visitante} #{fechaPartido}"
                     oldPartido = partidoClave[0]
                     oldPartido.update(:dividendoEmpateSM => dividendoEmpate,
                                         :dividendoLocalSM => dividendoLocal,
@@ -125,7 +115,12 @@ module SmScrapper
     end
 
     def obtenerPartidosSm()
-        @driver = Selenium::WebDriver.for :chrome
+        options = Selenium::WebDriver::Chrome::Options.new
+        #esta linea sirve para que no te levante el navegador
+        options.add_argument('--headless')
+        options.add_argument('--disable-gpu')
+        options.add_argument('--no-sandbox')
+        @driver = Selenium::WebDriver.for(:chrome, options: options)
         @driver.navigate.to "https://www.supermatch.com.uy/"
 
         selecionarDeporteSM("Fútbol", 'category_link')

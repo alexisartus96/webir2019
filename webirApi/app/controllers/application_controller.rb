@@ -7,6 +7,7 @@ class ApplicationController < ActionController::API
   include Response
   include Bet365Scrapper
   include SmScrapper
+ 
 
 
   rescue_from ActiveRecord::RecordNotFound do |e|

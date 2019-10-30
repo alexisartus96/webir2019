@@ -31,5 +31,13 @@ Diccionario.create!(clave:'Liverpool Montevideo', valor:'Liverpool')
 Diccionario.create!(clave:'River Plate (Arg)', valor:'River Plate')
 Diccionario.create!(clave:'Colón (Arg)', valor:'Colón')
 
+Diccionario.create!(clave:'Talleres (C.)', valor:'CA Talleres de Córdoba')
+Diccionario.create!(clave:'Unión', valor:'Unión de Santa Fe')
+Diccionario.create!(clave:'CA Independiente', valor:'Independiente')
+
+Diccionario.create!(clave:'Racing Club', valor:'Racing (Arg)')
+Diccionario.create!(clave:'Arsenal de Sarandí', valor:'Arsenal (Arg)')
+Diccionario.create!(clave:'Central Córdoba SdE', valor:'Central Córdoba')
+Diccionario.create!(clave:'Vélez Sarsfield', valor:'Vélez Sársfield')
 
 

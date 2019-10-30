@@ -1,11 +1,6 @@
 require "selenium-webdriver"
-# require_relative "diccionario_nombres_equipos"
 
 module Bet365Scrapper 
-    # def initialize
-    #     @driver = Selenium::WebDriver.for :chrome
-    # end
-
     
     def selecionarIdiomaBet(language)
         wait = Selenium::WebDriver::Wait.new(timeout: 15)
@@ -91,7 +86,6 @@ module Bet365Scrapper
                 hora = fila.find_element(class: 'sl-CouponParticipantWithBookCloses_LeftSideContainer').text.split(":")
 
                 equipos = nombresEquipos.text.split(" v ")
-                p equipos
                 local = equipos[0]
                 visitante = equipos[1]
                 unless(Diccionario.mapeo(equipos[0]).empty?)
@@ -107,14 +101,11 @@ module Bet365Scrapper
                 fechaConstructor = (fecha).to_date
                 
                 fechaPartido = DateTime.new(2019, fechaConstructor.month, fechaConstructor.day, hora[0].to_i, hora[1].to_i)
-                p "###################################"
-                p fechaPartido
                 fechaPartido = fechaPartido + 2.hours
-                p "###################################"
-                p fechaPartido
-                clave = (fechaPartido.to_s + local.to_s + visitante.to_s)
+                clave = (local.to_s + visitante.to_s + fechaPartido.year.to_s + fechaPartido.month.to_s + fechaPartido.day.to_s)
                 partidoClave = Partido.where(clave: clave)
                 if partidoClave.empty?
+                    p "Nuevo partido Bet365 #{local} vs #{visitante} #{fechaPartido}"
                     nuevoPartido = Partido.new
                     nuevoPartido.local = local
                     nuevoPartido.visitante = visitante
@@ -125,6 +116,7 @@ module Bet365Scrapper
                     nuevoPartido.clave = clave 
                     nuevoPartido.save
                 else
+                    p "Update Bet365 partido #{local} vs #{visitante} #{fechaPartido}"
                     oldPartido = partidoClave[0]
                     oldPartido.update(:dividendoEmpateBet => dividendoEmpate,
                                         :dividendoLocalBet => dividendoLocal,
@@ -134,13 +126,18 @@ module Bet365Scrapper
         end
     end
 
-    def obtenerPartidosBet365(liga)
-        @driver = Selenium::WebDriver.for :chrome
+    def obtenerPartidosBet365()
+        options = Selenium::WebDriver::Chrome::Options.new
+        #esta linea sirve para que no te levante el navegador
+        options.add_argument('--headless')
+        options.add_argument('--disable-gpu')
+        options.add_argument('--no-sandbox')
+        @driver = Selenium::WebDriver.for(:chrome, options: options)
         @driver.navigate.to "https://www.bet365.mx"
 
         selecionarIdiomaBet("Español")
         selecionarDeporteBet("Fútbol")
-        selecionarCampeonatoBet(liga)
+        selecionarCampeonatoBet("Argentina - Superliga")
         cargarPartidosBet()
         @driver.close
  
