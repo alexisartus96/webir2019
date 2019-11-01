@@ -1,26 +1,24 @@
 import React from 'react';
 import {
-  OuterDiv, BetBox, MatchBox, ClubName, BetButton, BetScoreBox
+  OuterDiv, BetBox, MatchBox, ClubBox, ClubName, BetOptionBox, BetButton, BetScoreBox, BetOptionsBox,
 } from '../styles/match';
-import matches from './test'
+import matches from './test';
 
 class Match extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      matches : matches,
-      selectedMatches : [],
-      scores : [],
-      supermatchFinalScore : 0,
-      bet365FinalScore : 0
+      matches,
+      selectedMatches: [],
+      scores: [],
+      supermatchFinalScore: 0,
+      bet365FinalScore: 0,
     };
 
     this.optionClicked = this.optionClicked.bind(this);
     this.updateScores = this.updateScores.bind(this);
   }
 
-  componentDidMount() {
-  }
 
   componentWillMount() {
     matches.map((value, index) => {
@@ -32,24 +30,24 @@ class Match extends React.Component {
     });
   }
 
+  componentDidMount() {
+  }
+
   optionClicked(option, index) {
-    const { matches, selectedMatches
-    } = this.state;
+    const { matches, selectedMatches } = this.state;
     var auxSelectedMatches = selectedMatches;
     const match = matches[index];
     if (!auxSelectedMatches.includes(match)) {
       match.selected[option] = true;
-      auxSelectedMatches.push(match); 
+      auxSelectedMatches.push(match);
+    } else if (match.selected[option]) {
+      match.selected[option] = false;
+      auxSelectedMatches = auxSelectedMatches.filter((item, j) => item !== match);
     } else {
-      if (match.selected[option]) {
-        match.selected[option] = false;
-        auxSelectedMatches = auxSelectedMatches.filter((item, j) => item !== match);
-      } else {
-        match.selected[1] = false;
-        match.selected[2] = false;
-        match.selected[3] = false;
-        match.selected[option] = true;
-      }
+      match.selected[1] = false;
+      match.selected[2] = false;
+      match.selected[3] = false;
+      match.selected[option] = true;
     }
     this.updateScores(auxSelectedMatches);
   }
@@ -74,7 +72,7 @@ class Match extends React.Component {
       bet365FinalScore : auxBet365FinalScore
     });
   }
-  
+
   render() {
     var btnStyle = {
       background: 'red',
@@ -87,11 +85,17 @@ class Match extends React.Component {
         <BetBox>
           {matches.map((value, index) => {
               return (<MatchBox id={index}>
-                        <ClubName>{value.local}</ClubName>
-                        <BetButton style={value.selected[1] ? btnStyle : {}} onClick={() => this.optionClicked(1, index)}>btn1</BetButton>
-                        <BetButton style={value.selected[2] ? btnStyle : {}} onClick={() => this.optionClicked(2, index)}>btn2</BetButton>
-                        <BetButton style={value.selected[3] ? btnStyle : {}} onClick={() => this.optionClicked(3, index)}>btn3</BetButton>
-                        <ClubName>{value.visitante}</ClubName>
+                        <ClubBox>
+                          <ClubName>{value.local}</ClubName>
+                        </ClubBox>
+                        <BetOptionsBox>
+                          <BetButton style={value.selected[1] ? btnStyle : {}} onClick={() => this.optionClicked(1, index)}>Gana 1</BetButton>
+                          <BetButton style={value.selected[2] ? btnStyle : {}} onClick={() => this.optionClicked(2, index)}>Empate</BetButton>
+                          <BetButton style={value.selected[3] ? btnStyle : {}} onClick={() => this.optionClicked(3, index)}>Gana 2</BetButton>
+                        </BetOptionsBox>
+                        <ClubBox>
+                          <ClubName>{value.visitante}</ClubName>
+                        </ClubBox>
                       </MatchBox>)
             }
           )}

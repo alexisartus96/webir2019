@@ -5,9 +5,9 @@ export const Box = styled.footer`
   left: 0;
   bottom: 0;
   width: 100%;
-  background: #e61919;
-  color: #FFFFFF;
-  font-family: "Candara";
+  background: #ff4a41;
+  color: #ffffff;
+  font-family: 'Candara';
   padding: 15px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -18,9 +18,9 @@ export const Box = styled.footer`
   align-items: center;
   flex-direction: row;
   flex: 10;
-  
+
   @media (min-width: 426px) {
-    margin-top: 45px;
+    margin-top: 0px;
   }
 
   @media (max-width: 425px) {
@@ -31,7 +31,7 @@ export const Box = styled.footer`
 export const SubBox = styled.div`
   flex: ${props => (props.shrink ? 0.4 : 1)};
 
-  @media (min-width : 426px) and (max-width : 768px) {
+  @media (min-width: 426px) and (max-width: 768px) {
     display: ${props => (props.dontShowOnTablet ? 'none' : null)};
   }
 
@@ -58,12 +58,12 @@ export const Line = styled.div`
   flex: 1;
   width: 80%;
   margin: 1% 0% 2% 0%;
-  border: 0.5px solid #FFFFFF;
+  border: 0.5px solid #ffffff;
 `;
 
 export const FooterText = styled.a`
-    color: #FFFFFF;
-    text-decoration: none;
+  color: #ffffff;
+  text-decoration: none;
 `;
 
 export const Logo = styled.img`
@@ -74,32 +74,32 @@ export const Logo = styled.img`
 
 export const Link = styled.a`
   :link {
-      color: white; 
-      background-color: transparent; 
-      text-decoration: none;
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
   }
 
   :visited {
-      color: white;
-      background-color: transparent;
-      text-decoration: none;
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
   }
 
   :hover {
-      color: white;
-      background-color: transparent;
-      text-decoration: underline;
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
   }
 
   :active {
-      color: white;
-      background-color: transparent;
-      text-decoration: underline;
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
   }
 `;
 
 export const FooterLogo = styled.img`
-    height: 20px;
-    width: 20px;
-    margin-right: 2%;
+  height: 20px;
+  width: 20px;
+  margin-right: 2%;
 `;

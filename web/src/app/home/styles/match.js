@@ -1,48 +1,66 @@
 import styled from 'styled-components';
 
 export const OuterDiv = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-    padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  background: #97d885;
 `;
+
 export const BetBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 40vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 45vw;
+  border-radius: 15px;
+  background: #f3ec5a;
+  border: medium solid black;
 `;
 
 export const MatchBox = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
 `;
 
-export const ClubName = styled.h4`
+export const ClubBox = styled.div`
+  width: 32%;
+  text-align: center;
+`;
+
+export const ClubName = styled.h4``;
+
+export const BetOptionsBox = styled.div`
+  width: 34%;
 `;
 
 export const BetButton = styled.a`
-    cursor: pointer;
-    padding: 15px 15px;
-    display: inline-block;
-    margin: 10px 10px;
-    font-weight: 700;
-    background: #17aa56;
-    color: #fff;
-    border-radius: 7px;
-    box-shadow: 0 5px #119e4d;
+  cursor: pointer;
+  padding: 12px 12px;
+  display: inline-block;
+  margin: 2px 2px;
+  font-weight: 700;
+  background: #17aa56;
+  color: #fff;
+  border-radius: 7px;
+  box-shadow: 0 5px #119e4d;
+  text-align: center;
 `;
 
 export const BetScoreBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 40vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 45vw;
+  background: #f7b5b1;
+  border-radius: 15px;
+  border: medium solid black;
 `;
