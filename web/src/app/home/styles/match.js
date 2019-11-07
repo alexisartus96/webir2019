@@ -6,7 +6,8 @@ export const OuterDiv = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  padding: 20px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   background: #97d885;
 `;
 
@@ -27,7 +28,7 @@ export const MatchBox = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 20px;
+  padding: 15px;
 `;
 
 export const ClubBox = styled.div`
@@ -63,4 +64,38 @@ export const BetScoreBox = styled.div`
   background: #f7b5b1;
   border-radius: 15px;
   border: medium solid black;
+`;
+
+export const ChoiceBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
+export const MatchChoiceBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  text-align: left;
+`;
+
+export const SupermatchResultBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  text-align: center;
+  background: #ff4a41;
+`;
+
+export const Bet365ResultBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  text-align: center;
+  background: #17aa56;
 `;

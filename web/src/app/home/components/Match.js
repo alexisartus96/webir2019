@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-  OuterDiv, BetBox, MatchBox, ClubBox, ClubName, BetOptionBox, BetButton, BetScoreBox, BetOptionsBox,
+  OuterDiv, BetBox, MatchBox, ClubBox, ClubName, BetOptionBox, BetButton, BetScoreBox, 
+  ChoiceBox, BetOptionsBox, MatchChoiceBox, SupermatchResultBox, Bet365ResultBox,
 } from '../styles/match';
 import matches from './test';
 
@@ -53,16 +54,18 @@ class Match extends React.Component {
   }
 
   updateScores(matches) {
-    var auxSupermatchFinalScore = 0;
-    var auxBet365FinalScore = 0;
+    var auxSupermatchFinalScore = 1;
+    var auxBet365FinalScore = 1;
     var auxScores = [];
     for (const [index, value] of matches.entries()) {
       let result = {};
       result.bet365 = value.selected[1] ? value.dividendos.bet365.ganaLocal : (value.selected[2] ? value.dividendos.bet365.empate : value.dividendos.bet365.ganaVisitante);
       result.supermatch = value.selected[1] ? value.dividendos.supermatch.ganaLocal : (value.selected[2] ? value.dividendos.supermatch.empate : value.dividendos.supermatch.ganaVisitante);
       result.result = value.selected[1] ? 'Gana Local' : (value.selected[2] ? 'Empate' : 'Gana Visitante');
-      auxSupermatchFinalScore += result.supermatch;
-      auxBet365FinalScore += result.bet365;
+      auxSupermatchFinalScore *= result.supermatch;
+      auxSupermatchFinalScore = auxSupermatchFinalScore.toFixed(2);
+      auxBet365FinalScore *= result.bet365;
+      auxBet365FinalScore = auxBet365FinalScore.toFixed(2);
       auxScores.push(result)
     }
     this.setState({
@@ -101,16 +104,38 @@ class Match extends React.Component {
           )}
         </BetBox>
         <BetScoreBox>
+          <ChoiceBox>
+            <MatchChoiceBox />
+            <SupermatchResultBox>
+              <ClubName>Supermatch</ClubName>
+            </SupermatchResultBox>
+            <Bet365ResultBox>
+              <ClubName>Bet365</ClubName>
+            </Bet365ResultBox>
+          </ChoiceBox>
             {scores.map((value, index) => {
-              return (<MatchBox id={index}>
-                        <ClubName>Resultado {value.result}</ClubName>
-                        <ClubName>Supermatch {value.supermatch}</ClubName>
-                        <ClubName>Bet365 {value.bet365}</ClubName>
-                      </MatchBox>)
+              return (<ChoiceBox id={index}>
+                        <MatchChoiceBox>
+                          <ClubName>Resultado: {value.result}</ClubName>
+                        </MatchChoiceBox>
+                        <SupermatchResultBox>
+                          <ClubName>{value.supermatch}</ClubName>
+                        </SupermatchResultBox>
+                        <Bet365ResultBox>
+                          <ClubName>{value.bet365}</ClubName>
+                        </Bet365ResultBox>
+                      </ChoiceBox>)
             }
             )}
-            <ClubName>Total Supermatch {supermatchFinalScore}</ClubName>
-            <ClubName>Total Bet365 {bet365FinalScore}</ClubName>
+            <ChoiceBox>
+            <MatchChoiceBox />
+            <SupermatchResultBox>
+              <ClubName>Total: {supermatchFinalScore}</ClubName>
+            </SupermatchResultBox>
+            <Bet365ResultBox>
+              <ClubName>Total: {bet365FinalScore}</ClubName>
+            </Bet365ResultBox>
+          </ChoiceBox>
         </BetScoreBox>
       </OuterDiv>
     );
