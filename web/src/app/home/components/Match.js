@@ -1,7 +1,24 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import {
-  OuterDiv, BetBox, MatchBox, ClubBox, ClubName, BetOptionBox, BetButton, BetScoreBox, 
-  ChoiceBox, BetOptionsBox, MatchChoiceBox, SupermatchResultBox, Bet365ResultBox,
+  OuterDiv,
+  BetBox,
+  MatchBox,
+  ClubBox,
+  ClubName,
+  BetOptionBox,
+  BetButton,
+  BetScoreBox,
+  ChoiceBox,
+  BetOptionsBox,
+  SupermatchResultBox,
+  Bet365ResultBox,
+  BoxTitle,
+  DividendBox,
+  BasicDiv,
+  BasicDivSupermatch,
+  BasicDivBet365,
 } from '../styles/match';
 import matches from './test';
 
@@ -12,14 +29,13 @@ class Match extends React.Component {
       matches,
       selectedMatches: [],
       scores: [],
-      supermatchFinalScore: 0,
-      bet365FinalScore: 0,
+      supermatchFinalScore: 1,
+      bet365FinalScore: 1,
     };
 
     this.optionClicked = this.optionClicked.bind(this);
     this.updateScores = this.updateScores.bind(this);
   }
-
 
   componentWillMount() {
     matches.map((value, index) => {
@@ -31,12 +47,11 @@ class Match extends React.Component {
     });
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   optionClicked(option, index) {
     const { matches, selectedMatches } = this.state;
-    var auxSelectedMatches = selectedMatches;
+    let auxSelectedMatches = selectedMatches;
     const match = matches[index];
     if (!auxSelectedMatches.includes(match)) {
       match.selected[option] = true;
@@ -54,88 +69,160 @@ class Match extends React.Component {
   }
 
   updateScores(matches) {
-    var auxSupermatchFinalScore = 1;
-    var auxBet365FinalScore = 1;
-    var auxScores = [];
+    let auxSupermatchFinalScore = 1;
+    let auxBet365FinalScore = 1;
+    const auxScores = [];
     for (const [index, value] of matches.entries()) {
-      let result = {};
-      result.bet365 = value.selected[1] ? value.dividendos.bet365.ganaLocal : (value.selected[2] ? value.dividendos.bet365.empate : value.dividendos.bet365.ganaVisitante);
-      result.supermatch = value.selected[1] ? value.dividendos.supermatch.ganaLocal : (value.selected[2] ? value.dividendos.supermatch.empate : value.dividendos.supermatch.ganaVisitante);
-      result.result = value.selected[1] ? 'Gana Local' : (value.selected[2] ? 'Empate' : 'Gana Visitante');
+      const result = {};
+      result.bet365 = value.selected[1]
+        ? value.dividendos.bet365.ganaLocal
+        : value.selected[2]
+          ? value.dividendos.bet365.empate
+          : value.dividendos.bet365.ganaVisitante;
+      result.supermatch = value.selected[1]
+        ? value.dividendos.supermatch.ganaLocal
+        : value.selected[2]
+          ? value.dividendos.supermatch.empate
+          : value.dividendos.supermatch.ganaVisitante;
+      result.result = value.selected[1]
+        ? 'Gana Local'
+        : value.selected[2]
+          ? 'Empate'
+          : 'Gana Visitante';
       auxSupermatchFinalScore *= result.supermatch;
       auxSupermatchFinalScore = auxSupermatchFinalScore.toFixed(2);
       auxBet365FinalScore *= result.bet365;
       auxBet365FinalScore = auxBet365FinalScore.toFixed(2);
-      auxScores.push(result)
+      auxScores.push(result);
     }
     this.setState({
       selectedMatches: matches,
-      scores : auxScores,
-      supermatchFinalScore : auxSupermatchFinalScore,
-      bet365FinalScore : auxBet365FinalScore
+      scores: auxScores,
+      supermatchFinalScore: auxSupermatchFinalScore,
+      bet365FinalScore: auxBet365FinalScore,
     });
   }
 
   render() {
-    var btnStyle = {
+    const btnStyle = {
       background: 'red',
-      'box-shadow': '0 5px red'
+      'box-shadow': '0 5px red',
     };
-    const { matches, scores, supermatchFinalScore, bet365FinalScore
+    const topBorderStyle = {
+      'border-top': 'medium solid black',
+    };
+    const topRightBorderRadiusStyle = {
+      'border-radius': '0 12px 0 0',
+    };
+    const bottomRightBorderRadiusStyle = {
+      'border-radius': '0 0 12px 0',
+    };
+    const selectedStyle = {
+      border: '2px dotted black',
+      'border-radius': '5px',
+    };
+    const unSelectedStyle = {
+      border: '2px dotted rgba(255, 0, 0, 0)',
+      'border-radius': '5px',
+    };
+    const {
+      matches, scores, supermatchFinalScore, bet365FinalScore,
     } = this.state;
     return (
       <OuterDiv>
         <BetBox>
-          {matches.map((value, index) => {
-              return (<MatchBox id={index}>
-                        <ClubBox>
-                          <ClubName>{value.local}</ClubName>
-                        </ClubBox>
-                        <BetOptionsBox>
-                          <BetButton style={value.selected[1] ? btnStyle : {}} onClick={() => this.optionClicked(1, index)}>Gana 1</BetButton>
-                          <BetButton style={value.selected[2] ? btnStyle : {}} onClick={() => this.optionClicked(2, index)}>Empate</BetButton>
-                          <BetButton style={value.selected[3] ? btnStyle : {}} onClick={() => this.optionClicked(3, index)}>Gana 2</BetButton>
-                        </BetOptionsBox>
-                        <ClubBox>
-                          <ClubName>{value.visitante}</ClubName>
-                        </ClubBox>
-                      </MatchBox>)
-            }
-          )}
+          <BasicDiv>
+            <BoxTitle>PARTIDOS</BoxTitle>
+          </BasicDiv>
+          {matches.map((value, index) => (
+            <MatchBox id={index}>
+              <ClubBox>
+                <ClubName>{value.local}</ClubName>
+              </ClubBox>
+              <BetOptionsBox>
+                <BetButton
+                  style={value.selected[1] ? btnStyle : {}}
+                  onClick={() => this.optionClicked(1, index)}
+                >
+                  Gana 1
+                </BetButton>
+                <BetButton
+                  style={value.selected[2] ? btnStyle : {}}
+                  onClick={() => this.optionClicked(2, index)}
+                >
+                  Empate
+                </BetButton>
+                <BetButton
+                  style={value.selected[3] ? btnStyle : {}}
+                  onClick={() => this.optionClicked(3, index)}
+                >
+                  Gana 2
+                </BetButton>
+              </BetOptionsBox>
+              <ClubBox>
+                <ClubName>{value.visitante}</ClubName>
+              </ClubBox>
+            </MatchBox>
+          ))}
+          <BasicDiv style={topBorderStyle}>
+            <BoxTitle>TOTAL:</BoxTitle>
+          </BasicDiv>
         </BetBox>
         <BetScoreBox>
-          <ChoiceBox>
-            <MatchChoiceBox />
-            <SupermatchResultBox>
-              <ClubName>Supermatch</ClubName>
-            </SupermatchResultBox>
-            <Bet365ResultBox>
-              <ClubName>Bet365</ClubName>
-            </Bet365ResultBox>
-          </ChoiceBox>
-            {scores.map((value, index) => {
-              return (<ChoiceBox id={index}>
-                        <MatchChoiceBox>
-                          <ClubName>Resultado: {value.result}</ClubName>
-                        </MatchChoiceBox>
-                        <SupermatchResultBox>
-                          <ClubName>{value.supermatch}</ClubName>
-                        </SupermatchResultBox>
-                        <Bet365ResultBox>
-                          <ClubName>{value.bet365}</ClubName>
-                        </Bet365ResultBox>
-                      </ChoiceBox>)
-            }
-            )}
-            <ChoiceBox>
-            <MatchChoiceBox />
-            <SupermatchResultBox>
-              <ClubName>Total: {supermatchFinalScore}</ClubName>
-            </SupermatchResultBox>
-            <Bet365ResultBox>
-              <ClubName>Total: {bet365FinalScore}</ClubName>
-            </Bet365ResultBox>
-          </ChoiceBox>
+          <BasicDiv>
+            <BasicDivSupermatch>
+              <BoxTitle>SUPERMATCH</BoxTitle>
+            </BasicDivSupermatch>
+            <BasicDivBet365 style={topRightBorderRadiusStyle}>
+              <BoxTitle>BET365</BoxTitle>
+            </BasicDivBet365>
+          </BasicDiv>
+          {matches.map((value, index) => (
+            <ChoiceBox id={index}>
+              <SupermatchResultBox>
+                <DividendBox>
+                  <ClubName style={value.selected[1] ? selectedStyle : unSelectedStyle}>
+                    {value.dividendos.supermatch.ganaLocal}
+                  </ClubName>
+                </DividendBox>
+                <DividendBox>
+                  <ClubName style={value.selected[2] ? selectedStyle : unSelectedStyle}>
+                    {value.dividendos.supermatch.empate}
+                  </ClubName>
+                </DividendBox>
+                <DividendBox>
+                  <ClubName style={value.selected[3] ? selectedStyle : unSelectedStyle}>
+                    {value.dividendos.supermatch.ganaVisitante}
+                  </ClubName>
+                </DividendBox>
+              </SupermatchResultBox>
+              <Bet365ResultBox>
+                <DividendBox>
+                  <ClubName style={value.selected[1] ? selectedStyle : unSelectedStyle}>
+                    {value.dividendos.bet365.ganaLocal}
+                  </ClubName>
+                </DividendBox>
+                <DividendBox>
+                  <ClubName style={value.selected[2] ? selectedStyle : unSelectedStyle}>
+                    {value.dividendos.bet365.empate}
+                  </ClubName>
+                </DividendBox>
+                <DividendBox>
+                  <ClubName style={value.selected[3] ? selectedStyle : unSelectedStyle}>
+                    {value.dividendos.bet365.ganaVisitante}
+                  </ClubName>
+                </DividendBox>
+              </Bet365ResultBox>
+            </ChoiceBox>
+          ))}
+          <BasicDiv style={topBorderStyle}>
+            <BasicDivSupermatch>
+              <BoxTitle>{supermatchFinalScore}</BoxTitle>
+            </BasicDivSupermatch>
+            <BasicDivBet365 style={bottomRightBorderRadiusStyle}>
+              <BoxTitle>{bet365FinalScore}</BoxTitle>
+            </BasicDivBet365>
+          </BasicDiv>
         </BetScoreBox>
       </OuterDiv>
     );
