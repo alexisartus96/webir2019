@@ -7,9 +7,7 @@ import {
   MatchBox,
   ClubBox,
   ClubName,
-  BetOptionBox,
   BetButton,
-  BetScoreBox,
   ChoiceBox,
   BetOptionsBox,
   SupermatchResultBox,
@@ -19,6 +17,7 @@ import {
   BasicDiv,
   BasicDivSupermatch,
   BasicDivBet365,
+  RowBox,
 } from '../styles/match';
 import matches from './test';
 
@@ -111,6 +110,13 @@ class Match extends React.Component {
     const topBorderStyle = {
       'border-top': 'medium solid black',
     };
+    const rightBorderStyle = {
+      'border-right': 'medium solid black',
+    };
+    const topRightBorderStyle = {
+      'border-top': 'medium solid black',
+      'border-right': 'medium solid black',
+    };
     const topRightBorderRadiusStyle = {
       'border-radius': '0 12px 0 0',
     };
@@ -131,99 +137,101 @@ class Match extends React.Component {
     return (
       <OuterDiv>
         <BetBox>
-          <BasicDiv>
-            <BoxTitle>PARTIDOS</BoxTitle>
-          </BasicDiv>
+          <RowBox>
+            <BasicDiv style={rightBorderStyle}>
+              <BoxTitle>PARTIDOS</BoxTitle>
+            </BasicDiv>
+            <BasicDiv>
+              <BasicDivSupermatch>
+                <BoxTitle>SUPERMATCH</BoxTitle>
+              </BasicDivSupermatch>
+              <BasicDivBet365 style={topRightBorderRadiusStyle}>
+                <BoxTitle>BET365</BoxTitle>
+              </BasicDivBet365>
+            </BasicDiv>
+          </RowBox>
           {matches.map((value, index) => (
-            <MatchBox id={index}>
-              <ClubBox>
-                <ClubName>{value.local}</ClubName>
-              </ClubBox>
-              <BetOptionsBox>
-                <BetButton
-                  style={value.selected[1] ? btnStyle : {}}
-                  onClick={() => this.optionClicked(1, index)}
-                >
-                  Gana 1
-                </BetButton>
-                <BetButton
-                  style={value.selected[2] ? btnStyle : {}}
-                  onClick={() => this.optionClicked(2, index)}
-                >
-                  Empate
-                </BetButton>
-                <BetButton
-                  style={value.selected[3] ? btnStyle : {}}
-                  onClick={() => this.optionClicked(3, index)}
-                >
-                  Gana 2
-                </BetButton>
-              </BetOptionsBox>
-              <ClubBox>
-                <ClubName>{value.visitante}</ClubName>
-              </ClubBox>
-            </MatchBox>
+            <RowBox>
+              <MatchBox id={index} style={rightBorderStyle}>
+                <ClubBox>
+                  <ClubName>{value.local}</ClubName>
+                </ClubBox>
+                <BetOptionsBox>
+                  <BetButton
+                    style={value.selected[1] ? btnStyle : {}}
+                    onClick={() => this.optionClicked(1, index)}
+                  >
+                    Gana 1
+                  </BetButton>
+                  <BetButton
+                    style={value.selected[2] ? btnStyle : {}}
+                    onClick={() => this.optionClicked(2, index)}
+                  >
+                    Empate
+                  </BetButton>
+                  <BetButton
+                    style={value.selected[3] ? btnStyle : {}}
+                    onClick={() => this.optionClicked(3, index)}
+                  >
+                    Gana 2
+                  </BetButton>
+                </BetOptionsBox>
+                <ClubBox>
+                  <ClubName>{value.visitante}</ClubName>
+                </ClubBox>
+              </MatchBox>
+              <ChoiceBox id={index}>
+                <SupermatchResultBox>
+                  <DividendBox>
+                    <ClubName style={value.selected[1] ? selectedStyle : unSelectedStyle}>
+                      {value.dividendos.supermatch.ganaLocal}
+                    </ClubName>
+                  </DividendBox>
+                  <DividendBox>
+                    <ClubName style={value.selected[2] ? selectedStyle : unSelectedStyle}>
+                      {value.dividendos.supermatch.empate}
+                    </ClubName>
+                  </DividendBox>
+                  <DividendBox>
+                    <ClubName style={value.selected[3] ? selectedStyle : unSelectedStyle}>
+                      {value.dividendos.supermatch.ganaVisitante}
+                    </ClubName>
+                  </DividendBox>
+                </SupermatchResultBox>
+                <Bet365ResultBox>
+                  <DividendBox>
+                    <ClubName style={value.selected[1] ? selectedStyle : unSelectedStyle}>
+                      {value.dividendos.bet365.ganaLocal}
+                    </ClubName>
+                  </DividendBox>
+                  <DividendBox>
+                    <ClubName style={value.selected[2] ? selectedStyle : unSelectedStyle}>
+                      {value.dividendos.bet365.empate}
+                    </ClubName>
+                  </DividendBox>
+                  <DividendBox>
+                    <ClubName style={value.selected[3] ? selectedStyle : unSelectedStyle}>
+                      {value.dividendos.bet365.ganaVisitante}
+                    </ClubName>
+                  </DividendBox>
+                </Bet365ResultBox>
+              </ChoiceBox>
+            </RowBox>
           ))}
-          <BasicDiv style={topBorderStyle}>
-            <BoxTitle>TOTAL:</BoxTitle>
-          </BasicDiv>
+          <RowBox>
+            <BasicDiv style={topRightBorderStyle}>
+              <BoxTitle>TOTAL:</BoxTitle>
+            </BasicDiv>
+            <BasicDiv style={topBorderStyle}>
+              <BasicDivSupermatch>
+                <BoxTitle>{supermatchFinalScore}</BoxTitle>
+              </BasicDivSupermatch>
+              <BasicDivBet365 style={bottomRightBorderRadiusStyle}>
+                <BoxTitle>{bet365FinalScore}</BoxTitle>
+              </BasicDivBet365>
+            </BasicDiv>
+          </RowBox>
         </BetBox>
-        <BetScoreBox>
-          <BasicDiv>
-            <BasicDivSupermatch>
-              <BoxTitle>SUPERMATCH</BoxTitle>
-            </BasicDivSupermatch>
-            <BasicDivBet365 style={topRightBorderRadiusStyle}>
-              <BoxTitle>BET365</BoxTitle>
-            </BasicDivBet365>
-          </BasicDiv>
-          {matches.map((value, index) => (
-            <ChoiceBox id={index}>
-              <SupermatchResultBox>
-                <DividendBox>
-                  <ClubName style={value.selected[1] ? selectedStyle : unSelectedStyle}>
-                    {value.dividendos.supermatch.ganaLocal}
-                  </ClubName>
-                </DividendBox>
-                <DividendBox>
-                  <ClubName style={value.selected[2] ? selectedStyle : unSelectedStyle}>
-                    {value.dividendos.supermatch.empate}
-                  </ClubName>
-                </DividendBox>
-                <DividendBox>
-                  <ClubName style={value.selected[3] ? selectedStyle : unSelectedStyle}>
-                    {value.dividendos.supermatch.ganaVisitante}
-                  </ClubName>
-                </DividendBox>
-              </SupermatchResultBox>
-              <Bet365ResultBox>
-                <DividendBox>
-                  <ClubName style={value.selected[1] ? selectedStyle : unSelectedStyle}>
-                    {value.dividendos.bet365.ganaLocal}
-                  </ClubName>
-                </DividendBox>
-                <DividendBox>
-                  <ClubName style={value.selected[2] ? selectedStyle : unSelectedStyle}>
-                    {value.dividendos.bet365.empate}
-                  </ClubName>
-                </DividendBox>
-                <DividendBox>
-                  <ClubName style={value.selected[3] ? selectedStyle : unSelectedStyle}>
-                    {value.dividendos.bet365.ganaVisitante}
-                  </ClubName>
-                </DividendBox>
-              </Bet365ResultBox>
-            </ChoiceBox>
-          ))}
-          <BasicDiv style={topBorderStyle}>
-            <BasicDivSupermatch>
-              <BoxTitle>{supermatchFinalScore}</BoxTitle>
-            </BasicDivSupermatch>
-            <BasicDivBet365 style={bottomRightBorderRadiusStyle}>
-              <BoxTitle>{bet365FinalScore}</BoxTitle>
-            </BasicDivBet365>
-          </BasicDiv>
-        </BetScoreBox>
       </OuterDiv>
     );
   }

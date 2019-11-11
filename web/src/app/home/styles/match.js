@@ -16,11 +16,23 @@ export const BetBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 47vw;
+  width: 94vw;
   margin-left: 3vw;
-  border-radius: 15px 0 0 15px;
+  border-radius: 15px;
   background: #f3ec5a;
   border: medium solid black;
+`;
+
+export const BetOptionsBox = styled.div`
+  width: 34%;
+`;
+
+export const RowBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 `;
 
 export const MatchBox = styled.div`
@@ -28,8 +40,10 @@ export const MatchBox = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  padding: 10px;
+  width: 50%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-right: medium solid black;
 `;
 
 export const ClubBox = styled.div`
@@ -46,10 +60,6 @@ export const BoxTitle = styled.h4`
   font-weight: bold;
 `;
 
-export const BetOptionsBox = styled.div`
-  width: 34%;
-`;
-
 export const BetButton = styled.a`
   cursor: pointer;
   padding: 12px 12px;
@@ -63,25 +73,12 @@ export const BetButton = styled.a`
   text-align: center;
 `;
 
-export const BetScoreBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 47vw;
-  margin-right: 3vw;
-  border-radius: 0 15px 15px 0;
-  border-top: medium solid black;
-  border-bottom: medium solid black;
-  border-right: medium solid black;
-`;
-
 export const ChoiceBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 50%;
 `;
 
 export const BasicDiv = styled.div`
@@ -109,8 +106,8 @@ export const SupermatchResultBox = styled.div`
   width: 50%;
   text-align: center;
   background: #ff4a41;
-  padding: 10px;
   border-right: medium solid black;
+  padding: 8px;
 `;
 
 export const BasicDivBet365 = styled.div`
@@ -129,7 +126,7 @@ export const Bet365ResultBox = styled.div`
   width: 50%;
   text-align: center;
   background: #17aa56;
-  padding: 10px;
+  padding: 8px;
 `;
 
 export const DividendBox = styled.div`
