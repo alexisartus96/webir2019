@@ -18,6 +18,7 @@ export const BetBox = styled.div`
   align-items: center;
   width: 94vw;
   margin-left: 3vw;
+  margin-right: 3vw;
   border-radius: 15px;
   background: #f3ec5a;
   border: medium solid black;
