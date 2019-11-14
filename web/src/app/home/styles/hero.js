@@ -4,7 +4,7 @@ export const PrimaryBox = styled.div`
   position: relative;
   text-align: center;
   color: white;
-  height: calc(100vh - 55px);
+  height: 100vh;
 `;
 
 export const HeroImage = styled.img`

@@ -23,8 +23,8 @@ const Hero = () => (
           Empieza a jugar
       </SubTextBox>
     </HeroSubTitle>
-    <GoToLink onClick={() => scroll.scrollTo('Map', {
-      delay: 0, smooth: 'easeInOutQuart', duration: 1000, offset: (-110),
+    <GoToLink onClick={() => scroll.scrollTo('Match', {
+      delay: 0, smooth: 'easeInOutQuart', duration: 1000, offset: (0),
     })}
     >
       <GoTo src={arrowDown} />

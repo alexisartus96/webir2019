@@ -20,12 +20,13 @@ import {
   RowBox,
 } from '../styles/match';
 import matches from './test';
+import axios from 'axios';
 
 class Match extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      matches,
+      matches: [],
       selectedMatches: [],
       scores: [],
       supermatchFinalScore: 1,
@@ -37,16 +38,18 @@ class Match extends React.Component {
   }
 
   componentWillMount() {
-    matches.map((value, index) => {
+    /*matches.map((value, index) => {
       value.selected = [];
       value.selected[1] = false;
       value.selected[2] = false;
       value.selected[3] = false;
       return false;
-    });
+    });*/
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.getMatches();
+  }
 
   optionClicked(option, index) {
     const { matches, selectedMatches } = this.state;
@@ -67,6 +70,32 @@ class Match extends React.Component {
     this.updateScores(auxSelectedMatches);
   }
 
+  getMatches() {
+    axios.get(process.env.REACT_APP_API_MATCHES)
+      .then(({ data }) => {
+        data.map((value, index) => {
+          value.selected = [];
+          value.selected[1] = false;
+          value.selected[2] = false;
+          value.selected[3] = false;
+          return false;
+        });
+        this.setState(
+          {
+            matches: data,
+          },
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response) { // If a response has been received from the server
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+  } 
+
   updateScores(matches) {
     let auxSupermatchFinalScore = 1;
     let auxBet365FinalScore = 1;
@@ -74,15 +103,15 @@ class Match extends React.Component {
     for (const [index, value] of matches.entries()) {
       const result = {};
       result.bet365 = value.selected[1]
-        ? value.dividendos.bet365.ganaLocal
+        ? value.dividendoLocalBet
         : value.selected[2]
-          ? value.dividendos.bet365.empate
-          : value.dividendos.bet365.ganaVisitante;
+          ? value.dividendoEmpateBet
+          : value.dividendoVisitanteBet;
       result.supermatch = value.selected[1]
-        ? value.dividendos.supermatch.ganaLocal
+        ? value.dividendoLocalSM
         : value.selected[2]
-          ? value.dividendos.supermatch.empate
-          : value.dividendos.supermatch.ganaVisitante;
+          ? value.dividendoEmpateSM
+          : value.dividendoVisitanteSM;
       result.result = value.selected[1]
         ? 'Gana Local'
         : value.selected[2]
@@ -184,34 +213,34 @@ class Match extends React.Component {
                 <SupermatchResultBox>
                   <DividendBox>
                     <ClubName style={value.selected[1] ? selectedStyle : unSelectedStyle}>
-                      {value.dividendos.supermatch.ganaLocal}
+                      {value.dividendoLocalSM}
                     </ClubName>
                   </DividendBox>
                   <DividendBox>
                     <ClubName style={value.selected[2] ? selectedStyle : unSelectedStyle}>
-                      {value.dividendos.supermatch.empate}
+                      {value.dividendoEmpateSM}
                     </ClubName>
                   </DividendBox>
                   <DividendBox>
                     <ClubName style={value.selected[3] ? selectedStyle : unSelectedStyle}>
-                      {value.dividendos.supermatch.ganaVisitante}
+                      {value.dividendoVisitanteSM}
                     </ClubName>
                   </DividendBox>
                 </SupermatchResultBox>
                 <Bet365ResultBox>
                   <DividendBox>
                     <ClubName style={value.selected[1] ? selectedStyle : unSelectedStyle}>
-                      {value.dividendos.bet365.ganaLocal}
+                      {value.dividendoLocalBet}
                     </ClubName>
                   </DividendBox>
                   <DividendBox>
                     <ClubName style={value.selected[2] ? selectedStyle : unSelectedStyle}>
-                      {value.dividendos.bet365.empate}
+                      {value.dividendoEmpateBet}
                     </ClubName>
                   </DividendBox>
                   <DividendBox>
                     <ClubName style={value.selected[3] ? selectedStyle : unSelectedStyle}>
-                      {value.dividendos.bet365.ganaVisitante}
+                      {value.dividendoVisitanteBet}
                     </ClubName>
                   </DividendBox>
                 </Bet365ResultBox>
