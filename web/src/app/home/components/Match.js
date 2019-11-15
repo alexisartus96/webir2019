@@ -141,6 +141,10 @@ class Match extends React.Component {
     const topRightBorderRadiusStyle = {
       'border-radius': '0 12px 0 0',
     };
+    const topBorderAndPaddingStyle = {
+      'border-top': 'medium solid black',
+      padding: '0 10px',
+    };
     const bottomRightBorderRadiusStyle = {
       'border-radius': '0 0 12px 0',
     };
@@ -152,6 +156,9 @@ class Match extends React.Component {
       border: '2px dotted rgba(255, 0, 0, 0)',
       'border-radius': '5px',
     };
+    const paddingStyle = {
+      padding: '0 10px',
+    };
     const {
       matches, scores, supermatchFinalScore, bet365FinalScore,
     } = this.state;
@@ -159,7 +166,7 @@ class Match extends React.Component {
       <OuterDiv>
         <BetBox>
           <RowBox>
-            <BasicDiv>
+            <BasicDiv style={paddingStyle}>
               <BoxTitle>PARTIDOS</BoxTitle>
             </BasicDiv>
             <BasicDiv>
@@ -175,30 +182,28 @@ class Match extends React.Component {
             <RowBox>
               <MatchBox id={index}>
                 <ClubBox>
-                  <ClubName>{value.local}</ClubName>
-                </ClubBox>
-                <BetOptionsBox>
                   <BetButton
                     style={value.selected[1] ? btnStyle : {}}
                     onClick={() => this.optionClicked(1, index)}
                   >
-                    L
+                    {value.local}
                   </BetButton>
+                </ClubBox>
+                <BetOptionsBox>
                   <BetButton
                     style={value.selected[2] ? btnStyle : {}}
                     onClick={() => this.optionClicked(2, index)}
                   >
-                    E
+                    X
                   </BetButton>
+                </BetOptionsBox>
+                <ClubBox>
                   <BetButton
                     style={value.selected[3] ? btnStyle : {}}
                     onClick={() => this.optionClicked(3, index)}
                   >
-                    V
+                    {value.visitante}
                   </BetButton>
-                </BetOptionsBox>
-                <ClubBox>
-                  <ClubName>{value.visitante}</ClubName>
                 </ClubBox>
               </MatchBox>
               <ChoiceBox id={index}>
@@ -240,7 +245,7 @@ class Match extends React.Component {
             </RowBox>
           ))}
           <RowBox>
-            <BasicDiv style={topBorderStyle}>
+            <BasicDiv style={topBorderAndPaddingStyle}>
               <BoxTitle>TOTAL:</BoxTitle>
             </BasicDiv>
             <BasicDiv style={topBorderStyle}>
