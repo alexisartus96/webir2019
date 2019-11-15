@@ -6,8 +6,8 @@ export const OuterDiv = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   background: #97d885;
 `;
 
@@ -19,9 +19,8 @@ export const BetBox = styled.div`
   width: 94vw;
   margin-left: 3vw;
   margin-right: 3vw;
-  border-radius: 15px;
-  background: #f3ec5a;
-  border: medium solid black;
+  border-radius: 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 `;
 
 export const BetOptionsBox = styled.div`
@@ -38,6 +37,26 @@ export const RowBox = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+    
+  &:nth-child(even) {
+    background-color: #CAD3C8;
+  }
+
+  &:nth-child(odd) {
+    background-color: white;
+  }
+
+  &:first-child {
+    background-color: #2C3A47;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+
+  &:last-child {
+    background-color: #2C3A47;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
 `;
 
 export const MatchBox = styled.div`
@@ -62,8 +81,9 @@ export const ClubName = styled.h4`
 `;
 
 export const BoxTitle = styled.h4`
-  font-size: xx-large;
+  font-size: 20px;
   font-weight: bold;
+  color: white;
 `;
 
 export const BetButton = styled.a`
@@ -72,10 +92,10 @@ export const BetButton = styled.a`
   display: inline-block;
   margin: 2px 5px;
   font-weight: 700;
-  background: #17aa56;
+  background: #4cd16e;
   color: #fff;
   border-radius: 7px;
-  box-shadow: 0 5px #119e4d;
+  box-shadow: 0 5px #42ab5b;
   text-align: center;
   min-width: 20px;
   width: 100%;
@@ -102,10 +122,9 @@ export const BasicDivSupermatch = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background: #ff4a41;
   width: 50%;
-  border-left: medium solid black;
-  border-right: medium solid black;
+  border-left: 2px solid #000;
+  border-right: 2px solid #000;
 `;
 
 export const SupermatchResultBox = styled.div`
@@ -114,10 +133,9 @@ export const SupermatchResultBox = styled.div`
   align-items: center;
   width: 50%;
   text-align: center;
-  background: #ff4a41;
-  border-right: medium solid black;
-  border-left: medium solid black;
-  padding: 10px 8px;
+  border-right: 2px solid #000;
+  border-left: 2px solid #000;
+  padding: 10px;
 `;
 
 export const BasicDivBet365 = styled.div`
@@ -125,7 +143,6 @@ export const BasicDivBet365 = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background: #17aa56;
   width: 50%;
 `;
 
@@ -135,8 +152,7 @@ export const Bet365ResultBox = styled.div`
   align-items: center;
   width: 50%;
   text-align: center;
-  background: #17aa56;
-  padding: 10px 8px;
+  padding: 10px;
 `;
 
 export const DividendBox = styled.div`

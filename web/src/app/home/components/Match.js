@@ -132,25 +132,25 @@ class Match extends React.Component {
 
   render() {
     const btnStyle = {
-      background: 'red',
-      'box-shadow': '0 5px red',
+      background: '#e55039',
+      'box-shadow': '0 5px #c73423',
     };
     const topBorderStyle = {
-      'border-top': 'medium solid black',
+      'border-top': '1px solid #000',
     };
     const topRightBorderRadiusStyle = {
       'border-radius': '0 12px 0 0',
     };
     const topBorderAndPaddingStyle = {
-      'border-top': 'medium solid black',
+      'border-top': '1px solid #000',
       padding: '0 10px',
     };
     const bottomRightBorderRadiusStyle = {
       'border-radius': '0 0 12px 0',
     };
     const selectedStyle = {
-      border: '2px dotted black',
-      'border-radius': '5px',
+      border: '2px solid black',
+      'border-radius': '3px',
     };
     const unSelectedStyle = {
       border: '2px dotted rgba(255, 0, 0, 0)',

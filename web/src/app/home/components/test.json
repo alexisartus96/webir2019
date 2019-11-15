@@ -1,182 +1,123 @@
 [
   {
-    "local": "Liverpool",
-    "visitante": "Juventud de las piedas",
-    "fecha": "6/10/2019",
-    "hora": "16:00",
-    "dividendos": {
-      "supermatch": {
-        "ganaLocal": 1.25,
-        "empate": 2.45,
-        "ganaVisitante": 3.15
-      },
-      "bet365": {
-        "ganaLocal": 1.1,
-        "empate": 2.9,
-        "ganaVisitante": 3.65
-      }
-    }
+  "id":1,
+  "visitante":"Racing",
+  "local":"Cerro largo",
+  "dividendoLocalSM":1.65,
+  "dividendoVisitanteSM":3.8,
+  "dividendoEmpateSM":3.6,
+  "dividendoLocalBet":null,
+  "dividendoVisitanteBet":null,
+  "dividendoEmpateBet":null,
+  "fecha":"2019-11-16T16:00:00.000Z",
+  "clave":"Cerro largoRacing20191116",
+  "created_at":"2019-11-11T22:47:27.609Z",
+  "updated_at":"2019-11-11T22:47:27.609Z"
   },
   {
-    "local": "Peñarol",
-    "visitante": "Cerro Largo",
-    "fecha": "6/10/2019",
-    "hora": "16:00",
-    "dividendos": {
-      "supermatch": {
-        "ganaLocal": 1.25,
-        "empate": 2.45,
-        "ganaVisitante": 3.15
-      },
-      "bet365": {
-        "ganaLocal": 1.1,
-        "empate": 2.9,
-        "ganaVisitante": 5.25
-      }
-    }
+  "id":2,
+  "visitante":"Juventud de las piedas",
+  "local":"Plaza Colonia",
+  "dividendoLocalSM":1.6,
+  "dividendoVisitanteSM":4.45,
+  "dividendoEmpateSM":3.35,
+  "dividendoLocalBet":null,
+  "dividendoVisitanteBet":null,
+  "dividendoEmpateBet":null,
+  "fecha":"2019-11-16T16:00:00.000Z",
+  "clave":"Plaza ColoniaJuventud de las piedas20191116",
+  "created_at":"2019-11-11T22:47:27.685Z",
+  "updated_at":"2019-11-11T22:47:27.685Z"
   },
   {
-    "local": "Nacional",
-    "visitante": "Cerro",
-    "fecha": "6/10/2019",
-    "hora": "16:00",
-    "dividendos": {
-      "supermatch": {
-        "ganaLocal": 1.25,
-        "empate": 2.45,
-        "ganaVisitante": 3.15
-      },
-      "bet365": {
-        "ganaLocal": 1.1,
-        "empate": 2.9,
-        "ganaVisitante": 3.65
-      }
-    }
+  "id":3,
+  "visitante":"Liverpool",
+  "local":"Danubio",
+  "dividendoLocalSM":2.55,
+  "dividendoVisitanteSM":2.45,
+  "dividendoEmpateSM":2.9,
+  "dividendoLocalBet":null,
+  "dividendoVisitanteBet":null,
+  "dividendoEmpateBet":null,
+  "fecha":"2019-11-16T16:00:00.000Z",
+  "clave":"DanubioLiverpool20191116",
+  "created_at":"2019-11-11T22:47:27.755Z",
+  "updated_at":"2019-11-11T22:47:27.755Z"
   },
   {
-    "local": "Liverpool",
-    "visitante": "Juventud de las piedas",
-    "fecha": "6/10/2019",
-    "hora": "16:00",
-    "dividendos": {
-      "supermatch": {
-        "ganaLocal": 1.25,
-        "empate": 2.45,
-        "ganaVisitante": 3.15
-      },
-      "bet365": {
-        "ganaLocal": 1.1,
-        "empate": 2.9,
-        "ganaVisitante": 3.65
-      }
-    }
+  "id":4,
+  "visitante":"Progreso",
+  "local":"Fenix",
+  "dividendoLocalSM":2.65,
+  "dividendoVisitanteSM":2.2,
+  "dividendoEmpateSM":3.15,
+  "dividendoLocalBet":null,
+  "dividendoVisitanteBet":null,
+  "dividendoEmpateBet":null,
+  "fecha":"2019-11-16T16:00:00.000Z",
+  "clave":"FenixProgreso20191116",
+  "created_at":"2019-11-11T22:47:27.824Z",
+  "updated_at":"2019-11-11T22:47:27.824Z"
   },
   {
-    "local": "Liverpool",
-    "visitante": "Juventud de las piedas",
-    "fecha": "6/10/2019",
-    "hora": "16:00",
-    "dividendos": {
-      "supermatch": {
-        "ganaLocal": 1.25,
-        "empate": 2.45,
-        "ganaVisitante": 3.15
-      },
-      "bet365": {
-        "ganaLocal": 1.1,
-        "empate": 2.9,
-        "ganaVisitante": 3.65
-      }
-    }
+  "id":5,
+  "visitante":"Rampla",
+  "local":"Cerro",
+  "dividendoLocalSM":1.7,
+  "dividendoVisitanteSM":3.9,
+  "dividendoEmpateSM":3.3,
+  "dividendoLocalBet":null,
+  "dividendoVisitanteBet":null,
+  "dividendoEmpateBet":null,
+  "fecha":"2019-11-16T16:00:00.000Z",
+  "clave":"CerroRampla20191116",
+  "created_at":"2019-11-11T22:47:27.903Z",
+  "updated_at":"2019-11-11T22:47:27.903Z"
   },
   {
-    "local": "Liverpool",
-    "visitante": "Juventud de las piedas",
-    "fecha": "6/10/2019",
-    "hora": "16:00",
-    "dividendos": {
-      "supermatch": {
-        "ganaLocal": 1.25,
-        "empate": 2.45,
-        "ganaVisitante": 3.15
-      },
-      "bet365": {
-        "ganaLocal": 1.1,
-        "empate": 2.9,
-        "ganaVisitante": 3.65
-      }
-    }
+  "id":6,
+  "visitante":"Defensor SP",
+  "local":"River",
+  "dividendoLocalSM":2.3,
+  "dividendoVisitanteSM":2.6,
+  "dividendoEmpateSM":3.05,
+  "dividendoLocalBet":null,
+  "dividendoVisitanteBet":null,
+  "dividendoEmpateBet":null,
+  "fecha":"2019-11-16T16:00:00.000Z",
+  "clave":"RiverDefensor SP20191116",
+  "created_at":"2019-11-11T22:47:27.973Z",
+  "updated_at":"2019-11-11T22:47:27.973Z"
   },
   {
-    "local": "Liverpool",
-    "visitante": "Juventud de las piedas",
-    "fecha": "6/10/2019",
-    "hora": "16:00",
-    "dividendos": {
-      "supermatch": {
-        "ganaLocal": 1.25,
-        "empate": 2.45,
-        "ganaVisitante": 3.15
-      },
-      "bet365": {
-        "ganaLocal": 1.1,
-        "empate": 2.9,
-        "ganaVisitante": 3.65
-      }
-    }
+  "id":7,
+  "visitante":"Wanderers",
+  "local":"Boston River",
+  "dividendoLocalSM":2.1,
+  "dividendoVisitanteSM":2.8,
+  "dividendoEmpateSM":3.2,
+  "dividendoLocalBet":null,
+  "dividendoVisitanteBet":null,
+  "dividendoEmpateBet":null,
+  "fecha":"2019-11-16T16:00:00.000Z",
+  "clave":"Boston RiverWanderers20191116",
+  "created_at":"2019-11-11T22:47:28.051Z",
+  "updated_at":"2019-11-11T22:47:28.051Z"
   },
   {
-    "local": "Liverpool",
-    "visitante": "Juventud de las piedas",
-    "fecha": "6/10/2019",
-    "hora": "16:00",
-    "dividendos": {
-      "supermatch": {
-        "ganaLocal": 1.25,
-        "empate": 2.45,
-        "ganaVisitante": 3.15
-      },
-      "bet365": {
-        "ganaLocal": 1.1,
-        "empate": 2.9,
-        "ganaVisitante": 3.65
-      }
-    }
-  },
-  {
-    "local": "Liverpool",
-    "visitante": "Juventud de las piedas",
-    "fecha": "6/10/2019",
-    "hora": "16:00",
-    "dividendos": {
-      "supermatch": {
-        "ganaLocal": 1.25,
-        "empate": 2.45,
-        "ganaVisitante": 3.15
-      },
-      "bet365": {
-        "ganaLocal": 1.1,
-        "empate": 2.9,
-        "ganaVisitante": 3.65
-      }
-    }
-  },
-  {
-    "local": "Liverpool",
-    "visitante": "Juventud de las piedas",
-    "fecha": "6/10/2019",
-    "hora": "16:00",
-    "dividendos": {
-      "supermatch": {
-        "ganaLocal": 1.25,
-        "empate": 2.45,
-        "ganaVisitante": 3.15
-      },
-      "bet365": {
-        "ganaLocal": 1.1,
-        "empate": 2.9,
-        "ganaVisitante": 3.65
-      }
-    }
+  "id":8,
+  "visitante":"Peñarol",
+  "local":"Nacional",
+  "dividendoLocalSM":2.3,
+  "dividendoVisitanteSM":2.45,
+  "dividendoEmpateSM":3.3,
+  "dividendoLocalBet":null,
+  "dividendoVisitanteBet":null,
+  "dividendoEmpateBet":null,
+  "fecha":"2019-11-17T16:00:00.000Z",
+  "clave":"NacionalPeñarol20191117",
+  "created_at":"2019-11-11T22:47:28.171Z",
+  "updated_at":"2019-11-11T22:47:28.171Z"
   }
-]
+  ]
+  
