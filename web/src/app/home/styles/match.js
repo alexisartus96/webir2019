@@ -25,7 +25,11 @@ export const BetBox = styled.div`
 `;
 
 export const BetOptionsBox = styled.div`
-  width: 34%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
 `;
 
 export const RowBox = styled.div`
@@ -44,11 +48,10 @@ export const MatchBox = styled.div`
   width: 50%;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-right: medium solid black;
 `;
 
 export const ClubBox = styled.div`
-  width: 32%;
+  width: 40%;
   text-align: center;
 `;
 
@@ -72,6 +75,7 @@ export const BetButton = styled.a`
   border-radius: 7px;
   box-shadow: 0 5px #119e4d;
   text-align: center;
+  min-width: 20px;
 `;
 
 export const ChoiceBox = styled.div`
@@ -97,6 +101,7 @@ export const BasicDivSupermatch = styled.div`
   align-items: center;
   background: #ff4a41;
   width: 50%;
+  border-left: medium solid black;
   border-right: medium solid black;
 `;
 
@@ -108,7 +113,11 @@ export const SupermatchResultBox = styled.div`
   text-align: center;
   background: #ff4a41;
   border-right: medium solid black;
-  padding: 8px;
+  border-left: medium solid black;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 `;
 
 export const BasicDivBet365 = styled.div`
@@ -127,7 +136,10 @@ export const Bet365ResultBox = styled.div`
   width: 50%;
   text-align: center;
   background: #17aa56;
-  padding: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 `;
 
 export const DividendBox = styled.div`

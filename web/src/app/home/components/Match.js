@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
+import axios from 'axios';
 import {
   OuterDiv,
   BetBox,
@@ -20,7 +21,6 @@ import {
   RowBox,
 } from '../styles/match';
 import matches from './test';
-import axios from 'axios';
 
 class Match extends React.Component {
   constructor(props) {
@@ -38,13 +38,13 @@ class Match extends React.Component {
   }
 
   componentWillMount() {
-    /*matches.map((value, index) => {
+    /* matches.map((value, index) => {
       value.selected = [];
       value.selected[1] = false;
       value.selected[2] = false;
       value.selected[3] = false;
       return false;
-    });*/
+    }); */
   }
 
   componentDidMount() {
@@ -80,21 +80,20 @@ class Match extends React.Component {
           value.selected[3] = false;
           return false;
         });
-        this.setState(
-          {
-            matches: data,
-          },
-        );
+        this.setState({
+          matches: data,
+        });
       })
       .catch((error) => {
         console.log(error);
-        if (error.response) { // If a response has been received from the server
+        if (error.response) {
+          // If a response has been received from the server
           console.log(error.response.data);
           console.log(error.response.status);
           console.log(error.response.headers);
         }
       });
-  } 
+  }
 
   updateScores(matches) {
     let auxSupermatchFinalScore = 1;
@@ -139,13 +138,6 @@ class Match extends React.Component {
     const topBorderStyle = {
       'border-top': 'medium solid black',
     };
-    const rightBorderStyle = {
-      'border-right': 'medium solid black',
-    };
-    const topRightBorderStyle = {
-      'border-top': 'medium solid black',
-      'border-right': 'medium solid black',
-    };
     const topRightBorderRadiusStyle = {
       'border-radius': '0 12px 0 0',
     };
@@ -167,7 +159,7 @@ class Match extends React.Component {
       <OuterDiv>
         <BetBox>
           <RowBox>
-            <BasicDiv style={rightBorderStyle}>
+            <BasicDiv>
               <BoxTitle>PARTIDOS</BoxTitle>
             </BasicDiv>
             <BasicDiv>
@@ -181,7 +173,7 @@ class Match extends React.Component {
           </RowBox>
           {matches.map((value, index) => (
             <RowBox>
-              <MatchBox id={index} style={rightBorderStyle}>
+              <MatchBox id={index}>
                 <ClubBox>
                   <ClubName>{value.local}</ClubName>
                 </ClubBox>
@@ -190,19 +182,19 @@ class Match extends React.Component {
                     style={value.selected[1] ? btnStyle : {}}
                     onClick={() => this.optionClicked(1, index)}
                   >
-                    Gana 1
+                    L
                   </BetButton>
                   <BetButton
                     style={value.selected[2] ? btnStyle : {}}
                     onClick={() => this.optionClicked(2, index)}
                   >
-                    Empate
+                    E
                   </BetButton>
                   <BetButton
                     style={value.selected[3] ? btnStyle : {}}
                     onClick={() => this.optionClicked(3, index)}
                   >
-                    Gana 2
+                    V
                   </BetButton>
                 </BetOptionsBox>
                 <ClubBox>
@@ -248,7 +240,7 @@ class Match extends React.Component {
             </RowBox>
           ))}
           <RowBox>
-            <BasicDiv style={topRightBorderStyle}>
+            <BasicDiv style={topBorderStyle}>
               <BoxTitle>TOTAL:</BoxTitle>
             </BasicDiv>
             <BasicDiv style={topBorderStyle}>
